@@ -3,7 +3,7 @@
 import random
 import time
 
-def merge(arr, temp, from_index, mid, to_index, operation_counter):
+def merge(filearr, temp, from_index, mid, to_index, operation_counter):
     k = from_index
     i = from_index
     j = mid + 1
@@ -40,7 +40,6 @@ def merge_sort(arr, operation_counter):
 
 # Example usage with timing and operation counting:
 operation_counter = {'comparisons': 0}
-arr = [random.randint(1,10) for i in range(10000)]
 start_time = time.time()
 merge_sort(arr, operation_counter)
 end_time = time.time()
@@ -48,4 +47,9 @@ print("Size of the array: ",arr.__sizeof__())
 print(f"Merge Sort took {end_time - start_time:.6f} seconds to sort the array.")
 print(f"Merge Sort made {operation_counter['comparisons']} comparisons.")
 
-
+filearr = []
+# open and strip
+with open('../rev5k.txt') as file:
+    for fline in file:
+        filearr.append(int(fline.strip()))
+print(merge(100, filearr))
