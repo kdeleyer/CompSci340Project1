@@ -32,7 +32,7 @@ def insertion(n,arr):
 
 filearr = []
 # open and strip
-with open('rev5k.txt') as file:
+with open('../rev5k.txt') as file:
     for fline in file:
         filearr.append(int(fline.strip()))
 print(insertion(100, filearr))
