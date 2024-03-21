@@ -3,9 +3,12 @@
 Created on Wed Feb 21 13:35:59 2024
 
 @author: Shawn
+
+rewritten by PennP
 """
 import numpy as np
 import time
+import timeit
 
 def sum(n, arr):
     begin = time.time()
@@ -53,5 +56,6 @@ def matrixmult (n, a, b, c):
     print(f"Total runtime of the algortihm is {end - begin}")
 
 matrixmult(5,mat,mat2,mat3)
+
 
 print(mat3)
