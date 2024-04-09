@@ -4,8 +4,10 @@ Created on Thu Mar 21 11:20:45 2024
 
 @author: Shawn Fahy
 """
+import time
 
-# Node class  
+
+# Node class
 class Node:  
       
     # Constructor to initialize the node object  
@@ -14,7 +16,9 @@ class Node:
         self.next = None
 
 # function to sort linked list using insertion sort 
-def insertionSort(head): 
+def insertionSort(head):
+    #timing code
+    start = time.time()
   
     # Initialize sorted linked list 
     sorted = None
@@ -34,6 +38,9 @@ def insertionSort(head):
       
     # Update head variable to point to sorted linked list 
     head = sorted
+    end = time.time()
+    print("Time take in ms is : ", end-start)
+
     return head
   
 # function to insert a node in a linked list in a sorted manner
@@ -87,10 +94,10 @@ def insertAtStart(head_ref, new_data):
 
 a = None
 # open and strip
-with open('random5k.txt') as file:
+with open('../rev5k.txt') as file:
     for fline in file:
         a = insertAtStart(a, (int(fline.strip())))
-printList(a)
+#printList(a)
 a = insertionSort(a)
-printList(a)
+#printList(a)
 

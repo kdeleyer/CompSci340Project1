@@ -15,36 +15,36 @@ def insertion(arr):
         #ittrack+=1
         #for in n
         for i in range(len(arr)):
-            #ittrack+=1
+            ittrack+=1
             arr2.append(arr[i])
-            #ittrack+=1
+            ittrack+=1
             #arr2 length
             track = len(arr2)-1
-            #ittrack+=1
+            ittrack+=1
             #current
             current = track
-            #ittrack+=1
+            ittrack+=1
             #for in arr2
             while track >= 0:
-                #ittrack+=1
+                ittrack+=1
                 #if greater than
                 if arr2[track] > arr2[current]:
-                    #ittrack+=1
+                    ittrack+=1
                     #swip swap
                     temp = arr2[track]
-                    #ittrack+=1
+                    ittrack+=1
                     arr2[track] = arr2[current]
-                    #ittrack+=1
+                    ittrack+=1
                     arr2[current] = temp
-                    #ittrack+=1
+                    ittrack+=1
                     current-=1
-                    #ittrack+=1
+                    ittrack+=1
                 track-=1
-                #ittrack+=1
+                ittrack+=1
         #time
         end = time.time()
         print("Total time ms is : ", end-start)
-        #print("The total operations are: " , ittrack)
+        print("The total operations are: " , ittrack)
         return arr2
 
 
