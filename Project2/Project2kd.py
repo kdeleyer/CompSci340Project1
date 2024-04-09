@@ -2,54 +2,60 @@
 ## 2/22/24
 import random
 import time
-
+## A divid and conquor algorthim that will simplify the problem
+## sort the simple comparisons and add them back in order
+## Merge: sorts the sub arrays then combines them
 def merge(filearr, temp, from_index, mid, to_index, operation_counter):
     k = from_index
     i = from_index
     j = mid + 1
     while i <= mid and j <= to_index:
         operation_counter['comparisons'] += 1  # Counting comparisons
-        if arr[i] <= arr[j]:
-            temp[k] = arr[i]
+        if filearr[i] <= filearr[j]:
+            temp[k] = filearr[i]
             i += 1
         else:
-            temp[k] = arr[j]
+            temp[k] = filearr[j]
             j += 1
         k += 1
     while i <= mid:
-        temp[k] = arr[i]
+        temp[k] = filearr[i]
         i += 1
         k += 1
     while j <= to_index:
-        temp[k] = arr[j]
+        temp[k] = filearr[j]
         j += 1
         k += 1
     for i in range(from_index, to_index + 1):
-        arr[i] = temp[i]
+        filearr[i] = temp[i]
+## divids the array into smaller sub arrays until 1 element in every array
+## applies merge recursively
+## O(n log n) - n is # of elements
 
-def merge_sort(arr, operation_counter):
+def merge_sort(filearr, operation_counter):
     current_size = 1
-    while current_size < len(arr) - 1:
+    while current_size < len(filearr) - 1: ## while loop as long as current size is less then array size, controls processing of sub arrays
         left_start = 0
-        while left_start < len(arr)-1:
-            mid = min((left_start + current_size - 1), (len(arr)-1))
-            right_end = min((left_start + 2 * current_size - 1), (len(arr)-1))
-            merge(arr, [0] * len(arr), left_start, mid, right_end, operation_counter)
-            left_start += current_size * 2
+        while left_start < len(filearr)-1: ## while loop to continue to make subsets
+            mid = min((left_start + current_size - 1), (len(filearr)-1)) ## calc mid point
+            right_end = min((left_start + 2 * current_size - 1), (len(filearr)-1)) ## right end
+            merge(filearr, [0] * len(filearr), left_start, mid, right_end, operation_counter)
+            left_start += current_size * 2 ## moves left start to the right
         current_size *= 2
 
-# Example usage with timing and operation counting:
 operation_counter = {'comparisons': 0}
 start_time = time.time()
-merge_sort(arr, operation_counter)
-end_time = time.time()
-print("Size of the array: ",arr.__sizeof__())
-print(f"Merge Sort took {end_time - start_time:.6f} seconds to sort the array.")
-print(f"Merge Sort made {operation_counter['comparisons']} comparisons.")
 
 filearr = []
-# open and strip
-with open('../rev5k.txt') as file:
+with open('rev5k.txt') as file:
     for fline in file:
         filearr.append(int(fline.strip()))
-print(merge(100, filearr))
+
+merge_sort(filearr, operation_counter)
+end_time = time.time()
+print("Size of the array: ", len(filearr))
+time_taken = (end_time - start_time) * 1000
+print(f"Merge Sort took {time_taken:.6f} milliseconds to sort the array.")
+print(f"Merge Sort made {operation_counter['comparisons']} comparisons.")
+
+
