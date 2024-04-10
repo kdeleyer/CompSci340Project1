@@ -18,32 +18,22 @@ def insertion(arr):
         #for in n
         for i in range(len(arr)):
             #ittrack+=1
-            arr2.append(arr[i])
+            x = arr[i]
             #ittrack+=1
             #arr2 length
             track = len(arr2)-1
             #ittrack+=1
-            #current
-            current = track
+            j = i-1
             #ittrack+=1
             #for in arr2
-            while track >= 0:
+            while j>0 and arr[j]>x:
                 #ittrack+=1
-                #if greater than
-                if arr2[track] > arr2[current]:
-                    #ittrack+=1
-                    #swip swap
-                    temp = arr2[track]
-                    #ittrack+=1
-                    arr2[track] = arr2[current]
-                    #ittrack+=1
-                    arr2[current] = temp
-                    #ittrack+=1
-                    current-=1
-                    #ittrack+=1
-                track-=1
-                #ittrack+=1
+                arr[j+1] = arr[j]
+                j-=1
+            arr[j+1] = x
+
         #time
+        #print("ops:",ittrack)
         end = time.time()
         return(end-start)
 
@@ -60,4 +50,4 @@ for file in files:
     with open(file) as file:
         for fline in file:
             filearr.append(int(fline.strip()))
-    print("The time taken for", file.name, "is", insertion(filearr),"ms")
+    print("The time taken for", file.name, "is", insertion(filearr)*1000,"ms")
