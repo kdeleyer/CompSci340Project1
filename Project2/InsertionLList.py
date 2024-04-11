@@ -107,8 +107,8 @@ def insertAtStart(head_ref, new_data):
 
 
 #file list
-files = ["../inorder5k.txt", "../inorder10k.txt", "../inorder100k.txt", "../random5k.txt", "../random10k.txt",
-         "../random100k.txt", "../rev5k.txt", "../rev10k.txt", "../rev100k.txt"]
+files = ["inorder5k.txt", "inorder10k.txt", "inorder100k.txt", "random5k.txt", "random10k.txt",
+         "random100k.txt", "rev5k.txt", "rev10k.txt", "rev100k.txt"]
 a = None
 for file in files:
     #set it track to 0
