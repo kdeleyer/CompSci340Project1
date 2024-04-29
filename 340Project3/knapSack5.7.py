@@ -42,12 +42,12 @@ class KnapsackSolver:
     def solve(self):
         start_time = time.time()
         self.knapsack(0, 0, 0)
-        self.elapsed_time = time.time() - start_time
+        self.elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
         print(f"There was a total profit of {self.max_profit}")
         selected_items = [i+1 for i, x in enumerate(self.best_set) if x == 'yes']
         print(f"The items selected were {' '.join(map(str, selected_items))}")
         print(f"Number of nodes visited was {self.node_count}")
-        print(f"Time taken: {self.elapsed_time:.4f} seconds")
+        print(f"Time taken: {self.elapsed_time:.2f} milliseconds")  # Time in milliseconds
 
 # usage with one set of data:
 profits = [40, 30, 50, 10]
