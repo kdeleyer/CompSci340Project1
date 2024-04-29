@@ -1,3 +1,5 @@
+import time
+
 class KnapsackSolver:
     def __init__(self, profits, weights, max_weight):
         self.profits = profits
@@ -8,9 +10,9 @@ class KnapsackSolver:
         self.best_set = []
         self.include = ['no'] * self.n
         self.node_count = 0
+        self.elapsed_time = 0
 
     def promising(self, i, profit, weight):
-        # Check feasibility
         if weight >= self.max_weight:
             return False
         else:
@@ -27,14 +29,10 @@ class KnapsackSolver:
             return bound > self.max_profit
 
     def knapsack(self, i, profit, weight):
-        # Increment node_count each time this function is called
         self.node_count += 1
-
-        # Check if current node's profit is greater than max_profit
         if weight <= self.max_weight and profit > self.max_profit:
             self.max_profit = profit
             self.best_set = self.include[:i]
-
         if self.promising(i, profit, weight):
             self.include[i] = 'yes'
             self.knapsack(i + 1, profit + self.profits[i], weight + self.weights[i])
@@ -42,16 +40,19 @@ class KnapsackSolver:
             self.knapsack(i + 1, profit, weight)
 
     def solve(self):
+        start_time = time.time()
         self.knapsack(0, 0, 0)
+        self.elapsed_time = time.time() - start_time
         print(f"There was a total profit of {self.max_profit}")
         selected_items = [i+1 for i, x in enumerate(self.best_set) if x == 'yes']
         print(f"The items selected were {' '.join(map(str, selected_items))}")
         print(f"Number of nodes visited was {self.node_count}")
+        print(f"Time taken: {self.elapsed_time:.4f} seconds")
 
-# Example usage with one set of data (You will repeat this for each dataset provided):
-profits = [40, 30, 50, 10]  # Replace with actual profits
-weights = [2, 5, 10, 5]     # Replace with actual weights
-max_weight = 16              # Replace with actual max weight
+# usage with one set of data:
+profits = [40, 30, 50, 10]
+weights = [2, 5, 10, 5]
+max_weight = 16
 
 solver = KnapsackSolver(profits, weights, max_weight)
 solver.solve()
