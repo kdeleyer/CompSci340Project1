@@ -1,58 +1,53 @@
-import time
+def knapsack(i, profit, weight, items, capacity, include, best_set, num_best, max_profit, nodes_visited):
+    nodes_visited[0] += 1  # Increment node count
+    if weight <= capacity and profit > max_profit[0]:
+        max_profit[0] = profit
+        best_set[:] = include[:]
+        num_best[0] = i
 
-class KnapsackSolver:
-    def __init__(self, profits, weights, max_weight):
-        self.profits = profits
-        self.weights = weights
-        self.max_weight = max_weight
-        self.n = len(weights)
-        self.max_profit = 0
-        self.best_set = []
-        self.include = ['no'] * self.n
-        self.node_count = 0
-        self.elapsed_time = 0
+    if promising(i, weight, profit, items, capacity, max_profit[0]):
+        include[i + 1] = 1  # Include the next item
+        knapsack(i + 1, profit + items[i + 1][0], weight + items[i + 1][1], items, capacity, include, best_set, num_best, max_profit, nodes_visited)
+        include[i + 1] = 0  # Exclude the next item
+        knapsack(i + 1, profit, weight, items, capacity, include, best_set, num_best, max_profit, nodes_visited)
 
-    def promising(self, i, profit, weight):
-        if weight >= self.max_weight:
-            return False
-        else:
-            j = i + 1
-            bound = profit
-            totweight = weight
-            while j < self.n and totweight + self.weights[j] <= self.max_weight:
-                totweight += self.weights[j]
-                bound += self.profits[j]
-                j += 1
-            k = j
-            if k < self.n:
-                bound += (self.max_weight - totweight) * (self.profits[k] / self.weights[k])
-            return bound > self.max_profit
+def promising(i, weight, profit, items, capacity, max_profit):
+    if weight >= capacity:
+        return False
+    else:
+        j = i + 1
+        bound = profit
+        totweight = weight
+        while j < len(items) and totweight + items[j][1] <= capacity:
+            totweight += items[j][1]
+            bound += items[j][0]
+            j += 1
+        if j < len(items):
+            bound += (capacity - totweight) * (items[j][0] / items[j][1])
+        return bound > max_profit
 
-    def knapsack(self, i, profit, weight):
-        self.node_count += 1
-        if weight <= self.max_weight and profit > self.max_profit:
-            self.max_profit = profit
-            self.best_set = self.include[:i]
-        if self.promising(i, profit, weight):
-            self.include[i] = 'yes'
-            self.knapsack(i + 1, profit + self.profits[i], weight + self.weights[i])
-            self.include[i] = 'no'
-            self.knapsack(i + 1, profit, weight)
+# Initialize items with one of your test sets, e.g., Set 1 (W = 16)
+items = [
+    (40, 2),  # Item 1 with profit 40 and weight 2
+    (30, 5),  # Item 2 with profit 30 and weight 5
+    (50, 10), # Item 3 with profit 50 and weight 10
+    (10, 5)   # Item 4 with profit 10 and weight 5
+]
 
-    def solve(self):
-        start_time = time.time()
-        self.knapsack(0, 0, 0)
-        self.elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
-        print(f"There was a total profit of {self.max_profit}")
-        selected_items = [i+1 for i, x in enumerate(self.best_set) if x == 'yes']
-        print(f"The items selected were {' '.join(map(str, selected_items))}")
-        print(f"Number of nodes visited was {self.node_count}")
-        print(f"Time taken: {self.elapsed_time:.2f} milliseconds")  # Time in milliseconds
+# Set the capacity of the knapsack
+capacity = 16
 
-# usage with one set of data:
-profits = [40, 30, 50, 10]
-weights = [2, 5, 10, 5]
-max_weight = 16
+# Arrays to track included items and best found solution
+include = [0] * len(items)
+best_set = [0] * len(items)
+num_best = [0]
+max_profit = [0]
+nodes_visited = [0]
 
-solver = KnapsackSolver(profits, weights, max_weight)
-solver.solve()
+# Run the knapsack algorithm
+knapsack(-1, 0, 0, items, capacity, include, best_set, num_best, max_profit, nodes_visited)
+
+# Output the results
+print("Max profit:", max_profit[0])
+print("Best set:", [i+1 for i in range(len(best_set)) if best_set[i] == 1])  # Adjusted to print item numbers
+print("Nodes visited:", nodes_visited[0])
