@@ -5,7 +5,7 @@
 import time
 
 def sa_divide_conquer(x, y, i, j, op_count):
-    op_count[0] += 1  
+    op_count[0] += 1
     if i == len(x):
         return 2 * (len(y) - j), op_count
     if j == len(y):
