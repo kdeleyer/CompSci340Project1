@@ -1,44 +1,61 @@
 #Written by PennP on 5/1/24
-
+#time
+import time
 #global vars
 y1 = ['A','A','C','A','G','T','T','A','C','C']
-x1 = ['T','A','A','G','G','T','C','A']
-
+x1 = ['T','A','A','G','G','T','C','A',]
+#set2
+x2 = ['A','A','C','A','G','T','T','A','C','C']
+operation = 0
 
 def dynamic(x,y,xarr,yarr):
+    start = time.time_ns()
+    operation = 0
     #create array
-    trav = fillarr(x,y,xarr,yarr)
+    temp = fillarr(x,y,xarr,yarr)
+    trav = temp[0]
+    operation+=temp[1]
     #until solved
-    x1 = x
-    y1 = y
-    #total
-    total = 0
-    while x1 != 0 and y1 != 0:
-        print(x1,y1)
-        #if bigger
-        total = trav[y1][x1]
-        if trav[y1-1][x1-1] < trav[y1-1][x1] and trav[y1-1][x1-1] < trav[y1][x1-1]:
-            x1 = x1-1
-            y1 = y1-1
-        elif trav[y1-1][x1] < (trav[x1-1][y1-1] and trav[y1][x1-1]):
-            y1 = y1-1
+    x1 = 0
+    y1 = 0
+    while x1 != x and y != y:
+        #print(x1,y1)
+        operation+=1
+        currentval = trav[y1][x1]
+        #test down
+        if trav[y1+1][x1]+2 == currentval:
+            operation+=1
+            y1= y1+1
+        #test left
+        elif trav[y1][x1+1]+2 == currentval:
+            operation+=1
+            x1= x1+1
+        #else no other option
         else:
-            x1 = x1-1
-    total = trav[0][0]
-    return total
+            operation+=1
+            y1+=1
+            operation+=1
+            x1+=1
+        end = time.time_ns()
+        time = end - start
+        return [time,operation]
 
 
 
 
 def fillarr(x,y,arrx,arry):
+    operation = 0
     #2d array
+    operation +=1
     final = [[0 for _ in range(x+1)] for _ in range(y+1)]
     #perform fill opp from right to left
     for j in range(len(final[1])):
         #fill arr
+        operation+=1
         final[y][j] = 2*(x-j)
     #fill y
     for i in range(len(final)):
+        operation+=1
         final[i][x] = 2*(y-i)
     #calc all
     #y arr
@@ -49,13 +66,23 @@ def fillarr(x,y,arrx,arry):
             #if math and diag then no penalty
             if arrx[j] == arry[i]:
                 #no penatly
+                operation+=1
                 final[i][j] = final[i+1][j+1]
             else:
                 #algo from book
+                operation+=1
                 final[i][j] = min(final[i+1][j+1] + 1, final[i+1][j] + 2, final[i][j+1] + 2)
     #return completed array to use in the actual algorithm
-    return final
+    return [final,operation]
 
 
-print(dynamic(len(x1),len(y1),x1,y1))
-
+#automated runtime
+for i in range(3):
+    print("Running size",i,"...")
+    if i == 1:
+        temp = dynamic(len(x1),len(y1),x1,y1)
+    elif i == 2:
+        temp = dynamic(len(x2),len(y2),x2,y2)
+    else:
+        temp = dynamic(len(x3),len(y3),x3,y3)
+    print("Time taken is:",temp[0],"Operations:",temp[1])
