@@ -1,13 +1,19 @@
 #Written by PennP on 5/1/24
 #time
+
 import time
-#global vars
+# #global vars
 y1 = ['A','A','C','A','G','T','T','A','C','C']
 x1 = ['T','A','A','G','G','T','C','A',]
 #set2
-x2 = ['A','A','C','A','G','T','T','A','C','C']
-operation = 0
+x2 = ['C', 'C', 'G', 'G', 'G', 'T', 'T', 'A', 'C', 'C', 'A']
+y2 = ['G', 'G', 'A', 'G', 'T', 'T', 'C', 'A']
+#set
+x3 = ['A', 'A', 'C', 'A', 'G', 'T', 'T', 'A', 'C', 'C', 'T', 'A']
+y3 = ['T', 'A', 'A', 'G', 'G', 'T', 'C', 'A', 'G', 'C']
 
+
+operation = 0
 def dynamic(x,y,xarr,yarr):
     start = time.time_ns()
     operation = 0
@@ -36,9 +42,9 @@ def dynamic(x,y,xarr,yarr):
             y1+=1
             operation+=1
             x1+=1
-        end = time.time_ns()
-        time = end - start
-        return [time,operation]
+    end = time.time_ns()
+    returntime = end - start
+    return [returntime,operation]
 
 
 
@@ -77,7 +83,7 @@ def fillarr(x,y,arrx,arry):
 
 
 #automated runtime
-for i in range(3):
+for i in range(1,4):
     print("Running size",i,"...")
     if i == 1:
         temp = dynamic(len(x1),len(y1),x1,y1)
@@ -85,4 +91,4 @@ for i in range(3):
         temp = dynamic(len(x2),len(y2),x2,y2)
     else:
         temp = dynamic(len(x3),len(y3),x3,y3)
-    print("Time taken is:",temp[0],"Operations:",temp[1])
+    print("Time taken in nanoseconds is:",temp[0],"Operations:",temp[1])
