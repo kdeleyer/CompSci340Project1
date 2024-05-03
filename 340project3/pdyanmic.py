@@ -15,7 +15,7 @@ y3 = ['T', 'A', 'A', 'G', 'G', 'T', 'C', 'A', 'G', 'C']
 
 operation = 0
 def dynamic(x,y,xarr,yarr):
-    start = time.time_ns()
+    start = time.perf_counter_ns()
     operation = 0
     #create array
     temp = fillarr(x,y,xarr,yarr)
@@ -42,7 +42,7 @@ def dynamic(x,y,xarr,yarr):
             y1+=1
             operation+=1
             x1+=1
-    end = time.time_ns()
+    end = time.perf_counter_ns()
     returntime = end - start
     return [returntime,operation]
 
