@@ -1,4 +1,6 @@
 #node
+global nodevisted
+nodevisted = 0
 class Node:
     def __init__(self, level,profit,weight):
         self.level = level
@@ -12,9 +14,9 @@ def bound(u,W,w,n,p):
         return 0
     else:
         result = u.profit
-        j = u.level + 1
+        j = u.level
         totweight = u.weight
-        while j <= n and totweight +w[j] <= W:
+        while j <= n and totweight + w[j] <= W:
             totweight += w[j]
             result = result + p[j]
             j+=1
@@ -26,7 +28,9 @@ def bound(u,W,w,n,p):
 
 def knapsack2(n,p,w,W):
     #set null
+    global nodevisted
     Q = []
+    T = []
     #new node
     v = Node(0,0,0)
     #new node
@@ -36,15 +40,28 @@ def knapsack2(n,p,w,W):
     #enqueue
     Q.append(v)
     while len(Q)!=0:
+        nodevisted+=1
         #deque
-        Q.remove(v)
+        v = Q.pop(0)
         #set u
         u.level = v.level + 1
         u.weight = v.weight + w[u.level]
         u.profit = v.profit + p[u.level]
-
         if u.weight <= W and u.profit > maxprofit:
             maxprofit = u.profit
-        if bound(u) > maxprofit:
-            Q.append(u,W,w,n,p)
+        if bound(u,W,w,n,p) > maxprofit:
+            Q.append(u)
+            T.append(u.weight)
+    return(maxprofit,T)
 
+
+# Define items [(profit, weight), ...] based on Set 4
+items = [50,55,15,50]
+items2 = [2,10,5,20]
+
+# Total number of items and knapsack capacity from Set 4
+n = len(items)
+W = 20
+
+print("Profit, and Weights of Solution:",knapsack2(n, items,items2, W))
+print("Number of nodes visted:",nodevisted)
