@@ -1,6 +1,9 @@
 #node
 global nodevisted
+global operations
 nodevisted = 0
+operations = 0
+
 class Node:
     def __init__(self, level,profit,weight):
         self.level = level
@@ -11,6 +14,7 @@ class Node:
 #knapsack
 def bound(u,W,w,n,p):
     if u.weight > W:
+        operations+=1
         return 0
     else:
         result = u.profit
@@ -22,6 +26,7 @@ def bound(u,W,w,n,p):
             j+=1
         k = j
         if k<=n:
+            operations+=1
             result = result + (W-totweight) * (p[k]/w[k])
         return result
 
@@ -48,20 +53,22 @@ def knapsack2(n,p,w,W):
         u.weight = v.weight + w[u.level]
         u.profit = v.profit + p[u.level]
         if u.weight <= W and u.profit > maxprofit:
+            operations+=1
             maxprofit = u.profit
         if bound(u,W,w,n,p) > maxprofit:
+            operations+=1
             Q.append(u)
             T.append(u.weight)
     return(maxprofit,T)
 
 
 # Define items [(profit, weight), ...] based on Set 4
-items = [50,55,15,50]
-items2 = [2,10,5,20]
+items = [40,30,50,10]
+items2 = [2,5,10,5]
 
 # Total number of items and knapsack capacity from Set 4
 n = len(items)
-W = 20
+W = 16
 
 print("Profit, and Weights of Solution:",knapsack2(n, items,items2, W))
 print("Number of nodes visted:",nodevisted)
