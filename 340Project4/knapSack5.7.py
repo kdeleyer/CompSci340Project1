@@ -1,3 +1,4 @@
+import time
 def knapsack(i, profit, weight, items, capacity, include, best_set, num_best, max_profit, nodes_visited):
     nodes_visited[0] += 1  # Increment node count
     if weight <= capacity and profit > max_profit[0]:
@@ -45,8 +46,10 @@ max_profit = [0]
 nodes_visited = [0]
 
 # Run the knapsack algorithm
+start = time.time_ns()
 knapsack(-1, 0, 0, items, capacity, include, best_set, num_best, max_profit, nodes_visited)
-
+end = time.time_ns()
+print("Time taken ", end - start)
 # Output the results
 print("Max profit:", max_profit[0])
 print("Best set:", [i+1 for i in range(len(best_set)) if best_set[i] == 1])  # Adjusted to print item numbers

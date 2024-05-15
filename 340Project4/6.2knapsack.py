@@ -1,4 +1,6 @@
 import heapq
+import time
+
 
 class Node:
     def __init__(self, level=None, profit=0, weight=0, bound=0):
@@ -63,7 +65,9 @@ items = [
 # Total number of items and knapsack capacity from Set 4
 n = len(items)
 W = 40
-
+start = time.time_ns()
 max_profit, nodes_visited = knapsack(n, items, W)
+end = time.time_ns()
+print('Time:', end - start)
 print(f"Max profit: {max_profit}")
 print(f"Nodes visited: {nodes_visited}")

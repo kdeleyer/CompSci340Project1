@@ -1,8 +1,10 @@
 #node
+import time
 global nodevisted
 global operations
 nodevisted = 0
 operations = 0
+
 
 class Node:
     def __init__(self, level,profit,weight):
@@ -13,6 +15,7 @@ class Node:
 
 #knapsack
 def bound(u,W,w,n,p):
+    global operations
     if u.weight > W:
         operations+=1
         return 0
@@ -34,6 +37,7 @@ def bound(u,W,w,n,p):
 def knapsack2(n,p,w,W):
     #set null
     global nodevisted
+    global operations
     Q = []
     T = []
     #new node
@@ -69,6 +73,9 @@ items2 = [2,5,10,5]
 # Total number of items and knapsack capacity from Set 4
 n = len(items)
 W = 16
-
+start = time.time_ns()
 print("Profit, and Weights of Solution:",knapsack2(n, items,items2, W))
+end = time.time_ns()
+print("Execution time in nanoseconds: ",(end-start))
 print("Number of nodes visted:",nodevisted)
+print("operations:",operations)
