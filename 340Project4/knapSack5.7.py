@@ -29,14 +29,14 @@ def promising(i, weight, profit, items, capacity, max_profit):
 
 # Initialize items with one of your test sets, e.g., Set 1 (W = 16)
 items = [
-    (40, 2),  # Item 1 with profit 40 and weight 2
-    (30, 5),  # Item 2 with profit 30 and weight 5
-    (50, 10), # Item 3 with profit 50 and weight 10
-    (10, 5)   # Item 4 with profit 10 and weight 5
+    (50, 2),  # Item 1 with profit 40 and weight 2
+    (55, 10),  # Item 2 with profit 30 and weight 5
+    (15, 5), # Item 3 with profit 50 and weight 10
+    (50, 20)   # Item 4 with profit 10 and weight 5
 ]
 
 # Set the capacity of the knapsack
-capacity = 16
+capacity = 40
 
 # Arrays to track included items and best found solution
 include = [0] * len(items)
@@ -46,9 +46,9 @@ max_profit = [0]
 nodes_visited = [0]
 
 # Run the knapsack algorithm
-start = time.time_ns()
+start = time.perf_counter_ns()
 knapsack(-1, 0, 0, items, capacity, include, best_set, num_best, max_profit, nodes_visited)
-end = time.time_ns()
+end = time.perf_counter_ns()
 print("Time taken ", end - start)
 # Output the results
 print("Max profit:", max_profit[0])

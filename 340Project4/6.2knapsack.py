@@ -56,18 +56,18 @@ def knapsack(n, items, W):
 
 # Define items [(profit, weight), ...] based on Set 4
 items = [
-    (50, 2),
-    (55, 10),
-    (15, 5),
-    (50, 20)
+    (40, 2),
+    (30, 5),
+    (50, 10),
+    (10, 5)
 ]
 
 # Total number of items and knapsack capacity from Set 4
 n = len(items)
-W = 40
-start = time.time_ns()
+W = 16
+start = time.perf_counter_ns()
 max_profit, nodes_visited = knapsack(n, items, W)
-end = time.time_ns()
+end = time.perf_counter_ns()
 print('Time:', end - start)
 print(f"Max profit: {max_profit}")
 print(f"Nodes visited: {nodes_visited}")

@@ -23,7 +23,7 @@ def bound(u,W,w,n,p):
         result = u.profit
         j = u.level
         totweight = u.weight
-        while j <= n and totweight + w[j] <= W:
+        while j <= n and totweight + w[j] < W:
             totweight += w[j]
             result = result + p[j]
             j+=1
@@ -67,15 +67,15 @@ def knapsack2(n,p,w,W):
 
 
 # Define items [(profit, weight), ...] based on Set 4
-items = [40,30,50,10]
-items2 = [2,5,10,5]
+items = [50,55,15,50]
+items2 = [2,10,5,20]
 
 # Total number of items and knapsack capacity from Set 4
 n = len(items)
-W = 16
-start = time.time_ns()
+W = 35
+start = time.perf_counter_ns()
 print("Profit, and Weights of Solution:",knapsack2(n, items,items2, W))
-end = time.time_ns()
+end = time.perf_counter_ns()
 print("Execution time in nanoseconds: ",(end-start))
 print("Number of nodes visted:",nodevisted)
 print("operations:",operations)
